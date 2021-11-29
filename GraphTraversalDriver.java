@@ -35,6 +35,8 @@ public class GraphTraversalDriver
 		
 		
 		breadthFirst(0, graph);
+		System.out.println();
+		depthFirst(0, graph);
 	}
 	
 	public static void breadthFirst(int origin, Graph<String> graph)
@@ -59,7 +61,7 @@ public class GraphTraversalDriver
 			System.out.print(graph.getLabel(neighbors[i]));
 		}
 		
-		for(int j = 0; j < queue.length; j++)
+		while(queueCount != 0)
 		{
 			neighbors = graph.neighbors(queue[0]);
 			
@@ -77,11 +79,56 @@ public class GraphTraversalDriver
 			
 			for(int i = 0; i < queue.length - 1; i++)
 			{
-				queue[i] = queue[i + 1];
-				
+				queue[i] = queue[i + 1];		
 			}
 			if(countdown == true)
 				queueCount--;
 		}
-	} //end BreadthFirst
-}
+	} //end breadthFirst
+	
+	public static void depthFirst(int origin, Graph<String> graph) 
+	{
+        Stack<Integer> stack = new Stack<>();
+        Bag<Integer> visited = new Bag<>();
+        
+        int[] neighbors;
+        
+        stack.push(origin);
+        
+        System.out.print(graph.getLabel(origin));
+        
+        neighbors = graph.neighbors(stack.peek());
+        
+        if(!visited.contains(neighbors[0]))
+        {
+        	System.out.print(graph.getLabel(neighbors[0]));
+        	visited.add(neighbors[0]);
+        	stack.push(neighbors[0]);
+        }
+        
+        neighbors = graph.neighbors(neighbors[0]);
+        
+        for(int k = 0; k < 100; k++)
+        {  
+            if(!visited.contains(neighbors[0]))
+            {
+            	System.out.print(graph.getLabel(neighbors[0]));
+            	visited.add(neighbors[0]);
+            	stack.push(neighbors[0]);
+            	neighbors = graph.neighbors(neighbors[0]);
+            }
+            else
+            { 	
+            	if(!stack.isEmpty())
+            	{
+            		neighbors = graph.neighbors(stack.pop());
+                	
+                	for(int j = 0; j < neighbors.length - 1; j++)
+        			{
+        				neighbors[j] = neighbors[j + 1];		
+        			}
+            	}	
+            }
+        }	
+    } //end depthFirst    
+} //end GraphTraversalDriver
