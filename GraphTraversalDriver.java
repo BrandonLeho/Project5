@@ -1,4 +1,3 @@
-import java.util.*;
 
 public class GraphTraversalDriver 
 {
@@ -33,25 +32,27 @@ public class GraphTraversalDriver
 		graph.setLabel(7, "H");
 		graph.setLabel(8, "I");
 		
-		
+		System.out.print("Breadth-First Traversal order: ");
 		breadthFirst(0, graph);
+		
 		System.out.println();
+		
+		System.out.print("Depth-First Traversal order: ");
 		depthFirst(0, graph);
 	}
 	
 	public static void breadthFirst(int origin, Graph<String> graph)
 	{	
 		Bag<Integer> visited = new Bag<>();
+		
 		visited.add(origin);
-
 		System.out.print(graph.getLabel(origin));
 		
 		int[] queue = new int[10];
-		int[] neighbors;
 		int queueCount = 0;
 		boolean countdown = false;
 		
-		neighbors = graph.neighbors(origin);		
+		int[] neighbors = graph.neighbors(origin);		
 		
 		for(int i = 0; i < neighbors.length; i++)
 		{
@@ -77,10 +78,9 @@ public class GraphTraversalDriver
 				}
 			}
 			
-			for(int i = 0; i < queue.length - 1; i++)
-			{
+			for(int i = 0; i < queue.length - 1; i++)	
 				queue[i] = queue[i + 1];		
-			}
+
 			if(countdown == true)
 				queueCount--;
 		}
@@ -91,13 +91,10 @@ public class GraphTraversalDriver
         Stack<Integer> stack = new Stack<>();
         Bag<Integer> visited = new Bag<>();
         
-        int[] neighbors;
-        
         stack.push(origin);
-        
         System.out.print(graph.getLabel(origin));
         
-        neighbors = graph.neighbors(stack.peek());
+        int[] neighbors = graph.neighbors(stack.peek());
         
         if(!visited.contains(neighbors[0]))
         {
@@ -108,7 +105,8 @@ public class GraphTraversalDriver
         
         neighbors = graph.neighbors(neighbors[0]);
         
-        for(int k = 0; k < 100; k++)
+        int breakLoop = 0;    
+        while(breakLoop != 2)
         {  
             if(!visited.contains(neighbors[0]))
             {
@@ -117,17 +115,15 @@ public class GraphTraversalDriver
             	stack.push(neighbors[0]);
             	neighbors = graph.neighbors(neighbors[0]);
             }
-            else
+            else if(!stack.isEmpty())
             { 	
-            	if(!stack.isEmpty())
-            	{
-            		neighbors = graph.neighbors(stack.pop());
-                	
-                	for(int j = 0; j < neighbors.length - 1; j++)
-        			{
-        				neighbors[j] = neighbors[j + 1];		
-        			}
-            	}	
+            	neighbors = graph.neighbors(stack.pop());
+            	
+            	for(int j = 0; j < neighbors.length - 1; j++)
+    				neighbors[j] = neighbors[j + 1];			
+            	
+            	if(stack.isEmpty())
+            		breakLoop++;
             }
         }	
     } //end depthFirst    
