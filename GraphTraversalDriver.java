@@ -39,6 +39,27 @@ public class GraphTraversalDriver
 		
 		System.out.print("Depth-First Traversal order: ");
 		depthFirst(0, graph);
+		
+		System.out.println();
+		
+		boolean[][] adjacent = new boolean[length][length];
+		
+		for(int i = 0; i < length; i++)
+			System.out.print("\t" + graph.getLabel(i));
+		
+		System.out.println();
+		
+		for(int i = 0; i < length; i++)
+		{	
+			System.out.print(graph.getLabel(i));
+			
+			for(int j  = 0; j < length; j++)
+			{
+				adjacent[j][i] = graph.isEdge(i, j);
+				System.out.print("\t" + adjacent[j][i]);
+			}
+			System.out.println();
+		}
 	}
 	
 	public static void breadthFirst(int origin, Graph<String> graph)
