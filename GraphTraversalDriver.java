@@ -46,18 +46,18 @@ public class GraphTraversalDriver
 		boolean[][] adjacent = new boolean[length][length];
 		
 		for(int i = 0; i < length; i++)
-			System.out.print("\t" + graph.getLabel(i));
+			System.out.print("\t" + graph.getLabel(i)); //print top row of labels
 		
 		System.out.println();
 		
 		for(int i = 0; i < length; i++)
 		{	
-			System.out.print(graph.getLabel(i));
+			System.out.print(graph.getLabel(i)); //After each row, print label for the corresponding row
 			
 			for(int j  = 0; j < length; j++)
 			{
-				adjacent[j][i] = graph.isEdge(i, j);
-				System.out.print("\t" + adjacent[j][i]);
+				adjacent[j][i] = graph.isEdge(i, j);	 //determine if the vertex is a neighbor to all other vertices
+				System.out.print("\t" + adjacent[j][i]); //print boolean array row by row
 			}
 			System.out.println();
 		}
@@ -67,16 +67,17 @@ public class GraphTraversalDriver
 		//output for Adjacency List
 		for(int i = 0; i < length; i++)
 		{
-			System.out.print("Adjacency List for vertex " + graph.getLabel(i) + ":\nhead");
+			System.out.print("Adjacency List for vertex " + graph.getLabel(i) + ":\nhead"); //Print vertex label for the corresponding list
 			
 			for(int j = 0; j < length; j++)
-				if(graph.isEdge(i, j))
-					System.out.print(" -> " + graph.getLabel(j));
+				if(graph.isEdge(i, j))								//check to see if a vertex is a neighbor with another vertex, then print them in the list.
+					System.out.print(" -> " + graph.getLabel(j)); 	//print list
 			
 			System.out.println("\n");
 		}
 	} //end main
 	
+	//Task 1: Breadth-First method
 	public static void breadthFirst(int origin, Graph<String> graph)
 	{	
 		Bag<Integer> visited = new Bag<>();	//Creates new bag to store visited vertices
@@ -122,6 +123,7 @@ public class GraphTraversalDriver
 		}
 	} //end breadthFirst
 	
+	//Task 2: Depth-First method
 	public static void depthFirst(int origin, Graph<String> graph) 
 	{
         Stack<Integer> stack = new Stack<>();	//Stack vertices to visit neighbors
